@@ -15,6 +15,11 @@ namespace LibraryWpf.UserControls
             InitializeComponent();
             LoadData();
         }
+        public void RefreshData()
+        {
+            LoadData();
+        }
+
 
         private void LoadData()
         {

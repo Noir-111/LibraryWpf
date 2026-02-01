@@ -1,4 +1,5 @@
 ﻿using LibraryWpf.Data;
+using LibraryWpf.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -15,18 +16,22 @@ namespace LibraryWpf.UserControls
             LoadActiveLoans();
         }
 
+        public void RefreshData()
+        {
+            LoadActiveLoans();
+        }
+
         private void LoadActiveLoans()
         {
             using (var db = new LibraryContext())
             {
-                // Загружаем выдачи, где ReturnDate == null
                 var list = db.Loans
                     .Include(l => l.Book)
                     .Include(l => l.Reader)
                     .Where(l => l.ReturnDate == null)
-                    .Select(l => new
+                    .Select(l => new LoanView
                     {
-                        l.Id,
+                        Id = l.Id,
                         BookTitle = l.Book != null ? l.Book.Title : "",
                         ReaderName = l.Reader != null ? l.Reader.FullName : "",
                         IssueDate = l.IssueDate
@@ -40,19 +45,18 @@ namespace LibraryWpf.UserControls
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            if (DgLoans.SelectedItem == null)
+            if (DgLoans.SelectedItem is not LoanView selected)
             {
                 MessageBox.Show("Выберите выдачу в таблице.");
                 return;
             }
 
-            // Так как ItemsSource анонимный тип, достанем Id через reflection (просто и без MVVM)
-            var idProp = DgLoans.SelectedItem.GetType().GetProperty("Id");
-            int loanId = (int)idProp.GetValue(DgLoans.SelectedItem);
-
             using (var db = new LibraryContext())
             {
-                var loan = db.Loans.Include(l => l.Book).FirstOrDefault(l => l.Id == loanId);
+                var loan = db.Loans
+                    .Include(l => l.Book)
+                    .FirstOrDefault(l => l.Id == selected.Id);
+
                 if (loan == null) return;
 
                 loan.ReturnDate = DateTime.Now;
@@ -64,7 +68,7 @@ namespace LibraryWpf.UserControls
             }
 
             MessageBox.Show("Возврат принят!");
-            LoadActiveLoans();
+            LoadActiveLoans(); // обновляем сразу
         }
     }
 }

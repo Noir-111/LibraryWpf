@@ -6,22 +6,23 @@
         WindowStartupLocation="CenterScreen">
 
     <Grid Margin="10">
-        <TabControl>
+        <TabControl SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Книги">
-                <uc:BooksControl/>
+                <uc:BooksControl x:Name="BooksUc"/>
             </TabItem>
 
             <TabItem Header="Читатели">
-                <uc:ReadersControl/>
+                <uc:ReadersControl x:Name="ReadersUc"/>
             </TabItem>
 
             <TabItem Header="Выдача">
-                <uc:IssueControl/>
+                <uc:IssueControl x:Name="IssueUc"/>
             </TabItem>
 
             <TabItem Header="Возврат">
-                <uc:ReturnControl/>
+                <uc:ReturnControl x:Name="ReturnUc"/>
             </TabItem>
         </TabControl>
+
     </Grid>
 </Window>
