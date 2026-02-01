@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="LibraryWpf.UserControls.BooksControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- СЛЕВА: таблица -->
+        <DataGrid x:Name="DgBooks" Grid.Column="0" Margin="5"
+                  AutoGenerateColumns="False"
+                  SelectionChanged="DgBooks_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding Author}" Width="*"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*"/>
+                <DataGridTextColumn Header="Год" Binding="{Binding Year}" Width="90"/>
+                <DataGridTextColumn Header="Экземпляры" Binding="{Binding Copies}" Width="110"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- СПРАВА: форма -->
+        <StackPanel Grid.Column="1" Margin="5">
+            <TextBlock Text="Автор"/>
+            <TextBox x:Name="TbAuthor"/>
+
+            <TextBlock Text="Название"/>
+            <TextBox x:Name="TbTitle"/>
+
+            <TextBlock Text="Год"/>
+            <TextBox x:Name="TbYear"/>
+
+            <TextBlock Text="Количество экземпляров"/>
+            <TextBox x:Name="TbCopies"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Добавить" Click="BtnAdd_Click"/>
+                <Button Content="Изменить" Click="BtnEdit_Click"/>
+                <Button Content="Удалить" Click="BtnDelete_Click"/>
+            </StackPanel>
+
+            <Button Content="Очистить" Click="BtnClear_Click" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

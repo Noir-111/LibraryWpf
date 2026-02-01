@@ -1,0 +1,27 @@
+﻿<Window x:Class="LibraryWpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:LibraryWpf.UserControls"
+        Title="Библиотека" Height="520" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <TabControl>
+            <TabItem Header="Книги">
+                <uc:BooksControl/>
+            </TabItem>
+
+            <TabItem Header="Читатели">
+                <uc:ReadersControl/>
+            </TabItem>
+
+            <TabItem Header="Выдача">
+                <uc:IssueControl/>
+            </TabItem>
+
+            <TabItem Header="Возврат">
+                <uc:ReturnControl/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
